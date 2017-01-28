@@ -31,8 +31,8 @@ namespace api2.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(sOCIO);
+          
+            return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS });
         }
 
         // PUT: api/SOCIOs/5

@@ -25,6 +25,8 @@ namespace api2
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+           
+
         }
     }
 }
