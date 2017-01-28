@@ -243,6 +243,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CUENTAsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PERIODOsController.cs" />
     <Compile Include="Controllers\SOCIOsController.cs" />
@@ -253,9 +254,24 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CUENTA.cs">
-      <DependentUpon>PeriodoModel.tt</DependentUpon>
+      <DependentUpon>MovimientoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MovimientoModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovimientoModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MovimientoModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovimientoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MovimientoModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovimientoModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\PERIODO.cs">
       <DependentUpon>PeriodoModel.tt</DependentUpon>
     </Compile>
@@ -304,6 +320,16 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\MovimientoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MovimientoModel.edmx</DependentUpon>
+      <LastGenOutput>MovimientoModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MovimientoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MovimientoModel.edmx</DependentUpon>
+      <LastGenOutput>MovimientoModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\PeriodoModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
@@ -361,6 +387,13 @@
     </EntityDeploy>
     <Content Include="Models\PeriodoModel.edmx.diagram">
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\MovimientoModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MovimientoModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MovimientoModel.edmx.diagram">
+      <DependentUpon>MovimientoModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
