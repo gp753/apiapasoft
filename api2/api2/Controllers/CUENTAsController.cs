@@ -23,23 +23,29 @@ namespace api2.Controllers
         }
 
         // GET: api/CUENTAs/5
-      /*  [ResponseType(typeof(CUENTA))]
-        public IHttpActionResult GetCUENTA(string id,string id2,string id3)
-        {
-            CUENTA cUENTA = db.CUENTA.Find(id);
-            if (cUENTA == null)
-            {
-                return NotFound();
-            }
+        /*  [ResponseType(typeof(CUENTA))]
+          public IHttpActionResult GetCUENTA(string id,string id2,string id3)
+          {
+              CUENTA cUENTA = db.CUENTA.Find(id);
+              if (cUENTA == null)
+              {
+                  return NotFound();
+              }
 
-            return Ok(cUENTA);
-        }*/
+              return Ok(cUENTA);
+          }*/
 
-        [Route ("api/CUENTAs/{id}/{id2}")]
-        public string Get(string paramOne, string paramTwo)
+
+        [Route("api/cuentas/{id_s}/{cod_periodo}/{id_rubro}")]
+        public IHttpActionResult Get(string id_s, string cod_periodo,string id_rubro)
         {
-            return "The [Route] with multiple params worked";
+            var data = from CUENTA in db.CUENTA
+                       where CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo && CUENTA.ID_RUBRO == id_rubro
+                       select new { CUENTA.FECHA, CUENTA.IMPORTE };
+
+            return Ok(data);
         }
+
         // PUT: api/CUENTAs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCUENTA(string id, CUENTA cUENTA)

@@ -34,10 +34,7 @@ namespace api2.Controllers
                         join CUENTA in db.CUENTA on PERIODO.CODIGO_PERIODO equals CUENTA.CODIGO_PERIODO
                         where CUENTA.ID_SOCIO == id
                         select  new { PERIODO };
-            
-
- 
-            
+                   
             if (datos == null)
             {
  
