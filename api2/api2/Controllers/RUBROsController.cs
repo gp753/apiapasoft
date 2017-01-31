@@ -31,7 +31,7 @@ namespace api2.Controllers
                         join RUBRO in db.RUBRO on
                         CUENTA.ID_RUBRO equals
                         RUBRO.ID_RUBRO
-                        where CUENTA.ID_SOCIO == id
+                        where CUENTA.ID_SOCIO == id && CUENTA.LIQUIDADO == 1
                         select new { CUENTA.ID_RUBRO, RUBRO.DESCRIPCION };
             //select CUENTA.ID_RUBRO;
 

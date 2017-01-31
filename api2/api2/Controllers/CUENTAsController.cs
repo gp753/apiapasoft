@@ -40,7 +40,7 @@ namespace api2.Controllers
         public IHttpActionResult Get(string id_s, string cod_periodo,string id_rubro)
         {
             var data = from CUENTA in db.CUENTA
-                       where CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo && CUENTA.ID_RUBRO == id_rubro
+                       where (CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.ID_RUBRO == id_rubro && CUENTA.LIQUIDADO ==1)
                        select new { CUENTA.FECHA, CUENTA.IMPORTE };
 
             return Ok(data);

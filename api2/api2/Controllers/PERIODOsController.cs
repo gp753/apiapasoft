@@ -32,7 +32,7 @@ namespace api2.Controllers
             //             select new { fecha = CUENTA.FECHA, importe = CUENTA.IMPORTE} ;
             var datos = from PERIODO in db.PERIODO
                         join CUENTA in db.CUENTA on PERIODO.CODIGO_PERIODO equals CUENTA.CODIGO_PERIODO
-                        where CUENTA.ID_SOCIO == id
+                        where CUENTA.ID_SOCIO == id && CUENTA.LIQUIDADO == 1
                         select  new { PERIODO };
                    
             if (datos == null)
