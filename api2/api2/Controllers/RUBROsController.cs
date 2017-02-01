@@ -16,12 +16,7 @@ namespace api2.Controllers
     {
         private RubroEntities db = new RubroEntities();
 
-        // GET: api/RUBROs
-        public IQueryable<RUBRO> GetRUBRO()
-        {
-            return db.RUBRO;
-        }
-
+       
         // GET: api/RUBROs/5
         [ResponseType(typeof(CUENTA))]
         public IHttpActionResult GetCUENTA(string id)
@@ -53,22 +48,9 @@ namespace api2.Controllers
 
 
 
-            //return Ok(cUENTA);
-
-
-
-
-            /*
-            CUENTA cUENTA = db.CUENTA.Find(id);
-            if (cUENTA == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(cUENTA);
-            */
+          
         }
-
+        /*
         // PUT: api/RUBROs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRUBRO(string id, RUBRO rUBRO)
@@ -149,7 +131,7 @@ namespace api2.Controllers
 
             return Ok(rUBRO);
         }
-
+        */
         protected override void Dispose(bool disposing)
         {
             if (disposing)

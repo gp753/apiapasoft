@@ -243,8 +243,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CUENTAsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MOVIMIENTOsController.cs" />
     <Compile Include="Controllers\PERIODOsController.cs" />
     <Compile Include="Controllers\RUBROsController.cs" />
     <Compile Include="Controllers\SOCIOsController.cs" />
@@ -255,7 +255,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CUENTA.cs">
-      <DependentUpon>RubroModel.tt</DependentUpon>
+      <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MovimientoModel.Context.cs">
@@ -273,8 +273,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MovimientoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MovimientosModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovimientosModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MovimientosModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovimientosModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MovimientosModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MovimientosModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\PERIODO.cs">
-      <DependentUpon>PeriodoModel.tt</DependentUpon>
+      <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PeriodoModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -292,7 +307,7 @@
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\RUBRO.cs">
-      <DependentUpon>RubroModel.tt</DependentUpon>
+      <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RubroModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -348,6 +363,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MovimientoModel.edmx</DependentUpon>
       <LastGenOutput>MovimientoModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MovimientosModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MovimientosModel.edmx</DependentUpon>
+      <LastGenOutput>MovimientosModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MovimientosModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MovimientosModel.edmx</DependentUpon>
+      <LastGenOutput>MovimientosModel.cs</LastGenOutput>
     </Content>
     <Content Include="Models\PeriodoModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -431,6 +456,14 @@
     <Content Include="Models\RubroModel.edmx.diagram">
       <DependentUpon>RubroModel.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\MovimientosModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MovimientosModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MovimientosModel.edmx.diagram">
+      <DependentUpon>MovimientosModel.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

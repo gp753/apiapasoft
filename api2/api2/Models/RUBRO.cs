@@ -16,5 +16,6 @@ namespace api2.Models
     {
         public string ID_RUBRO { get; set; }
         public string DESCRIPCION { get; set; }
+        public string TIPO { get; set; }
     }
 }

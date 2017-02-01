@@ -16,12 +16,6 @@ namespace api2.Controllers
     {
         private apiapaEntities2 db = new apiapaEntities2();
 
-        // GET: api/PERIODOs
-        public IQueryable<PERIODO> GetPERIODO()
-        {
-            return db.PERIODO;
-        }
-
         // GET: api/PERIODOs/5
         [ResponseType(typeof(PERIODO))]
         public IHttpActionResult GetPERIODO(string id)
@@ -43,7 +37,7 @@ namespace api2.Controllers
             var distintos = datos.Distinct();
             return Ok(distintos);
         }
-
+/*
         // PUT: api/PERIODOs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPERIODO(string id, PERIODO pERIODO)
@@ -124,7 +118,7 @@ namespace api2.Controllers
 
             return Ok(pERIODO);
         }
-
+        */
         protected override void Dispose(bool disposing)
         {
             if (disposing)

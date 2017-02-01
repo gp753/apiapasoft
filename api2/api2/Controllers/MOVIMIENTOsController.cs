@@ -12,62 +12,53 @@ using api2.Models;
 
 namespace api2.Controllers
 {
-    public class CUENTAsController : ApiController
+    public class MOVIMIENTOsController : ApiController
     {
-        private apiapaEntities3 db = new apiapaEntities3();
+        private apiapaEntities4 db = new apiapaEntities4();
 
-        // GET: api/CUENTAs
-        public IQueryable<CUENTA> GetCUENTA()
+        [Route("api/movimientos/{id_s}/{cod_periodo}/{tipo}/{id_rubro}")]
+        public IHttpActionResult Get(string id_s, string cod_periodo,  string tipo,string id_rubro)
         {
-            return db.CUENTA;
+            
+            var data = from CUENTA in db.CUENTA
+                       join RUBRO in db.RUBRO on
+                       CUENTA.ID_RUBRO equals RUBRO.ID_RUBRO
+                       where ((CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.ID_RUBRO == id_rubro && CUENTA.LIQUIDADO == 1)) && RUBRO.TIPO == tipo
+                       select new { CUENTA.CODIGO_PERIODO, RUBRO.DESCRIPCION, CUENTA.FECHA, CUENTA.IMPORTE };
+
+            if (data.ToList().Count() == 0)
+            {
+
+                return NotFound();
+            }
+
+            var total = data.Sum(a => a.IMPORTE);
+            return Ok(new { data, total });
         }
 
-        // GET: api/CUENTAs/5
-        /*  [ResponseType(typeof(CUENTA))]
-          public IHttpActionResult GetCUENTA(string id,string id2,string id3)
-          {
-              CUENTA cUENTA = db.CUENTA.Find(id);
-              if (cUENTA == null)
-              {
-                  return NotFound();
-              }
+        [Route("api/movimientos/{id_s}/{cod_periodo}/{tipo}")]
+        public IHttpActionResult Get(string id_s, string cod_periodo, string tipo)
+        {
 
-              return Ok(cUENTA);
-          }*/
+            var data = from CUENTA in db.CUENTA
+                       join RUBRO in db.RUBRO on
+                       CUENTA.ID_RUBRO equals RUBRO.ID_RUBRO
+                       where ((CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.LIQUIDADO == 1)) && RUBRO.TIPO == tipo
+                       select new { CUENTA.CODIGO_PERIODO, RUBRO.DESCRIPCION, CUENTA.FECHA, CUENTA.IMPORTE };
+            if (data.ToList().Count() == 0)
+            {
+
+                return NotFound();
+            }
+            var total = data.Sum(a => a.IMPORTE);
+            return Ok(new { data, total});
+        }
 
 
-        //[Route("api/movimientos/rubro/{id_s}/{cod_periodo}/{id_rubro}")]
-        //public IHttpActionResult Get(string id_s, string cod_periodo,string id_rubro)
-        //{
+        
 
-        //    var data = from CUENTA in db.CUENTA
-        //               where (CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.ID_RUBRO == id_rubro && CUENTA.LIQUIDADO ==1)
-        //               select new { CUENTA.FECHA, CUENTA.IMPORTE };
-        //    if (data.ToList().Count() == 0)
-        //    {
-                
-        //        return NotFound();
-        //    }
-
-        //    return Ok(data);
-        //}
-
-        //[Route("api/movimientos/tipo/{id_s}/{cod_periodo}/{id_rubro}/{tipo}")]
-        //public IHttpActionResult Get(string id_s, string cod_periodo,string id_rubro, string tipo)
-        //{
-        //    var data = from CUENTA in db.CUENTA
-        //               where (CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.LIQUIDADO == 1)
-        //               select new { CUENTA.FECHA, CUENTA.IMPORTE };
-
-        //    if (data.ToList().Count() == 0)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(data);
-        //}
-
-        // PUT: api/CUENTAs/5
+      /*
+        // PUT: api/MOVIMIENTOs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCUENTA(string id, CUENTA cUENTA)
         {
@@ -102,7 +93,7 @@ namespace api2.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/CUENTAs
+        // POST: api/MOVIMIENTOs
         [ResponseType(typeof(CUENTA))]
         public IHttpActionResult PostCUENTA(CUENTA cUENTA)
         {
@@ -132,7 +123,7 @@ namespace api2.Controllers
             return CreatedAtRoute("DefaultApi", new { id = cUENTA.ID_MOVIMIENTO }, cUENTA);
         }
 
-        // DELETE: api/CUENTAs/5
+        // DELETE: api/MOVIMIENTOs/5
         [ResponseType(typeof(CUENTA))]
         public IHttpActionResult DeleteCUENTA(string id)
         {
@@ -146,7 +137,7 @@ namespace api2.Controllers
             db.SaveChanges();
 
             return Ok(cUENTA);
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {

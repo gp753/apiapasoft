@@ -16,11 +16,7 @@ namespace api2.Controllers
     {
         private apiapaEntities db = new apiapaEntities();
 
-        // GET: api/SOCIOs
-        public IQueryable<SOCIO> GetSOCIO()
-        {
-            return db.SOCIO;
-        }
+       
 
         // GET: api/SOCIOs/5
         [ResponseType(typeof(SOCIO))]
@@ -34,7 +30,7 @@ namespace api2.Controllers
           
             return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS });
         }
-
+        /*
         // PUT: api/SOCIOs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutSOCIO(string id, SOCIO sOCIO)
@@ -114,7 +110,7 @@ namespace api2.Controllers
             db.SaveChanges();
 
             return Ok(sOCIO);
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {
