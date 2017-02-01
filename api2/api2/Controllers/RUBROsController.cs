@@ -18,6 +18,11 @@ namespace api2.Controllers
 
        
         // GET: api/RUBROs/5
+        /// <summary>
+        /// Devuelve el id_rubro y la descripcion del rubro para hacer la lista desplegable de los rubros que tiene un socio y recibe el id de socio
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(CUENTA))]
         public IHttpActionResult GetCUENTA(string id)
         {
@@ -32,7 +37,7 @@ namespace api2.Controllers
 
 
 
-            if (datos == null)
+            if (datos.ToList().Count() == 0)
             {
 
                 return NotFound();

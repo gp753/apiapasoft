@@ -23,7 +23,7 @@ namespace api2.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private const string LocalLoginProvider = "Local";
+       /* private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
         public AccountController()
@@ -489,6 +489,6 @@ namespace api2.Controllers
             }
         }
 
-        #endregion
+        #endregion*/
     }
 }

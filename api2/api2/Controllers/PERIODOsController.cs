@@ -17,6 +17,11 @@ namespace api2.Controllers
         private apiapaEntities2 db = new apiapaEntities2();
 
         // GET: api/PERIODOs/5
+        /// <summary>
+        /// Devuelve todos los periodos que tiene el socio a partir de su id para la lista desplegable
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(PERIODO))]
         public IHttpActionResult GetPERIODO(string id)
         {
@@ -28,8 +33,8 @@ namespace api2.Controllers
                         join CUENTA in db.CUENTA on PERIODO.CODIGO_PERIODO equals CUENTA.CODIGO_PERIODO
                         where CUENTA.ID_SOCIO == id && CUENTA.LIQUIDADO == 1
                         select  new { PERIODO };
-                   
-            if (datos == null)
+
+            if (datos.ToList().Count() == 0)
             {
  
               return NotFound();

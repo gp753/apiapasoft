@@ -15,7 +15,14 @@ namespace api2.Controllers
     public class MOVIMIENTOsController : ApiController
     {
         private apiapaEntities4 db = new apiapaEntities4();
-
+        /// <summary>
+        /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro
+        /// </summary>
+        /// <param name="id_s"></param>
+        /// <param name="cod_periodo"></param>
+        /// <param name="tipo"></param>
+        /// <param name="id_rubro"></param>
+        /// <returns></returns>
         [Route("api/movimientos/{id_s}/{cod_periodo}/{tipo}/{id_rubro}")]
         public IHttpActionResult Get(string id_s, string cod_periodo,  string tipo,string id_rubro)
         {
@@ -35,7 +42,13 @@ namespace api2.Controllers
             var total = data.Sum(a => a.IMPORTE);
             return Ok(new { data, total });
         }
-
+        /// <summary>
+        /// Hace lo mismo que el anterior pero es por si no se elige el id_rubro, seria para mostrar sin filtrar por id_rubro
+        /// </summary>
+        /// <param name="id_s"></param>
+        /// <param name="cod_periodo"></param>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
         [Route("api/movimientos/{id_s}/{cod_periodo}/{tipo}")]
         public IHttpActionResult Get(string id_s, string cod_periodo, string tipo)
         {

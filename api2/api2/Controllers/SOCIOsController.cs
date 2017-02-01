@@ -19,6 +19,11 @@ namespace api2.Controllers
        
 
         // GET: api/SOCIOs/5
+        /// <summary>
+        /// Devuelve los datos del socio con su id
+        /// </summary>
+        /// <param name="id"></param>Se le pasa el id de socio
+        /// <returns></returns>
         [ResponseType(typeof(SOCIO))]
         public IHttpActionResult GetSOCIO(string id)
         {
@@ -30,6 +35,27 @@ namespace api2.Controllers
           
             return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS });
         }
+
+        /// <summary>
+        /// Devuelve todos los datos del socio a partir de la cedula
+        /// </summary>
+        /// <param name="cedula"></param>
+        /// <returns></returns>
+        [Route("api/socios/ci/{cedula}")]
+        public IHttpActionResult Get(string cedula)
+        {
+            var data = from SOCIO in db.SOCIO
+                       where SOCIO.CEDULA == cedula
+                       select SOCIO;
+            if (data.ToList().Count() == 0)
+            {
+
+                return NotFound();
+            }
+
+            return Ok(data);
+        }
+
         /*
         // PUT: api/SOCIOs/5
         [ResponseType(typeof(void))]

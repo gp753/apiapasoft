@@ -10,7 +10,7 @@ namespace api2.Controllers
     [Authorize]
     public class ValuesController : ApiController
     {
-        // GET api/values
+        /*// GET api/values
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -35,6 +35,6 @@ namespace api2.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
-        }
+        }*/
     }
 }
