@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
+using System.Web.Http.Cors;
 
 namespace api2.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class RUBROsController : ApiController
     {
         private RubroEntities db = new RubroEntities();

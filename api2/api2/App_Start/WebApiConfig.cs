@@ -17,6 +17,9 @@ namespace api2
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+            //habilitar cors
+            config.EnableCors();
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

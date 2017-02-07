@@ -9,11 +9,14 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
+using System.Web.Http.Cors;
 
 namespace api2.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class MOVIMIENTOsController : ApiController
     {
+        
         private apiapaEntities4 db = new apiapaEntities4();
         /// <summary>
         /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro
