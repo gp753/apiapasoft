@@ -17,9 +17,6 @@ namespace api2.Controllers
     public class SOCIOsController : ApiController
     {
         private apiapaEntities db = new apiapaEntities();
-
-       
-
         // GET: api/SOCIOs/5
         /// <summary>
         /// Devuelve los datos del socio con su id
