@@ -316,6 +316,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RegModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RegModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RegModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\RUBRO.cs">
       <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
@@ -351,6 +366,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SocioModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\users.cs">
+      <DependentUpon>RegModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -393,6 +411,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
       <LastGenOutput>PeriodoModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RegModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RegModel.edmx</DependentUpon>
+      <LastGenOutput>RegModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RegModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RegModel.edmx</DependentUpon>
+      <LastGenOutput>RegModel.cs</LastGenOutput>
     </Content>
     <Content Include="Models\RubroModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -472,6 +500,13 @@
     </EntityDeploy>
     <Content Include="Models\MovimientosModel.edmx.diagram">
       <DependentUpon>MovimientosModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\RegModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RegModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\RegModel.edmx.diagram">
+      <DependentUpon>RegModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

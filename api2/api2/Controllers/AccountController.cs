@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -16,13 +19,18 @@ using Microsoft.Owin.Security.OAuth;
 using api2.Models;
 using api2.Providers;
 using api2.Results;
+using System.Linq;
 
 namespace api2.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
+
     public class AccountController : ApiController
     {
+        private apausrEntities db = new apausrEntities();
+        private apiapaEntities db2 = new apiapaEntities();
+
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
@@ -125,7 +133,7 @@ namespace api2.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -258,9 +266,9 @@ namespace api2.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -319,6 +327,7 @@ namespace api2.Controllers
         }
 
         // POST api/Account/Register
+
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
@@ -328,17 +337,69 @@ namespace api2.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
+            var id_usr = from Users in db.Users
+                         where Users.Cedula == model.Cedula
+                         select Users.Id;
+            if (id_usr.ToList().Count() == 0)
             {
-                return GetErrorResult(result);
-            }
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            return Ok();
-        }
+
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
+
+                id_usr = from Users in db.Users
+                         where Users.Email == model.Email
+                         select Users.Id;
+
+                Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
+
+                var data = from SOCIO in db2.SOCIO
+                           where SOCIO.CEDULA == model.Cedula
+                           select SOCIO.ID_SOCIO;
+
+                SOCIO sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
+
+                if (sOCIO == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    uSERS.Cedula = model.Cedula;
+                    db.Entry(uSERS).State = EntityState.Modified;
+
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        throw;
+                    }
+                }
+
+
+
+
+
+                return Ok(sOCIO.ID_SOCIO);
+            }
+            else
+            {
+
+                return BadRequest("Usuario ya registrado");
+            }
+            
+
+        } 
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
