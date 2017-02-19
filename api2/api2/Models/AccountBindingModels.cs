@@ -32,11 +32,26 @@ namespace api2.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeMailBindingModel
+    {
+        [Required]
+        [Display(Name = "Current CI")]
+        public string cedula { get; set; }
+
+        [Required]
+        [Display(Name = "New Mail")]
+        public string NewMail { get; set; }
+    }
+
     public class RegisterBindingModel
     {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Rol")]
+        public string Rol { get; set; }
 
         [Required]
         [Display(Name = "Cedula")]
