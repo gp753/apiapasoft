@@ -12,18 +12,18 @@ namespace api2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class roles
+    public partial class Roles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public roles()
+        public Roles()
         {
-            this.users = new HashSet<users>();
+            this.UserRoles = new HashSet<UserRoles>();
         }
     
         public string Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public virtual ICollection<UserRoles> UserRoles { get; set; }
     }
 }

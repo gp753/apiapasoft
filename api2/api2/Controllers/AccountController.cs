@@ -30,12 +30,14 @@ namespace api2.Controllers
     {
         private apausrEntities db = new apausrEntities();
         private apiapaEntities db2 = new apiapaEntities();
+        private rolsEntities db3 = new rolsEntities();
 
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -72,6 +74,41 @@ namespace api2.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+        }
+
+        /// <summary>
+        /// Con el id de usuario (no de cliente) devuelve los roles que tiene
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // GET /api/Account/Rol
+        [AllowAnonymous]
+        [Route("Rol/{id}")]
+        public IHttpActionResult Get(string id)
+        {
+            var existe = from UserRoles in db3.UserRoles
+                         where UserRoles.UserId == id
+                         select UserRoles.RoleId;
+            if (existe.ToList().Count() > 0)
+            {
+                var rol_final = from Roles in db3.Roles
+                                where Roles.Id == existe.FirstOrDefault()
+                                select  new { Roles.Id, Roles.Name } ;
+
+                if (rol_final.ToList().Count() > 0)
+                {
+                    return Ok(rol_final);
+                }
+                else
+                {
+                    return NotFound();
+                }
+                               
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/Account/Logout
@@ -325,9 +362,56 @@ namespace api2.Controllers
 
             return logins;
         }
+        /// <summary>
+        /// Permite cambiar la direccion de correo, recibe la cedula y el newmail
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [Route("changemail")]
+        public async Task<IHttpActionResult> changemail(ChangeMailBindingModel model)
+        {
+            var old = from Users in db.Users
+                      where Users.Cedula == model.cedula
+                      select Users.Id;
+            if (old.ToList().Count() == 0)
+            {
+                return NotFound();
+            }
+            var nuevo = from Users in db.Users
+                        where Users.Email == model.NewMail
+                        select Users;
+            if (nuevo.ToList().Count() > 0)
+            {
+                return BadRequest("Mail ya registrado");
+            }
+
+            Users uSERS = db.Users.Find(old.FirstOrDefault());
+
+            if (uSERS == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                uSERS.Email = model.NewMail;
+                db.Entry(uSERS).State = EntityState.Modified;
+
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
+
+            return Ok("Mail reemplazado con exito!");
+        }
 
         // POST api/Account/Register
-
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
@@ -365,20 +449,30 @@ namespace api2.Controllers
                            select SOCIO.ID_SOCIO;
 
                 SOCIO sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
+                var hay_rol = from Roles in db3.Roles
+                              where Roles.Id == model.Rol
+                              select Roles.Id; 
 
-                if (sOCIO == null)
+                if (sOCIO == null && hay_rol.ToList().Count() ==0)
                 {
                     return NotFound();
                 }
                 else
                 {
                     uSERS.Cedula = model.Cedula;
-                    db.Entry(uSERS).State = EntityState.Modified;
 
+                    UserRoles rol = new UserRoles();
+                    rol.UserId = uSERS.Id;
+                    rol.RoleId = model.Rol;
+
+                    
+                    db.Entry(uSERS).State = EntityState.Modified;
+                    db3.UserRoles.Add(rol);
 
                     try
                     {
                         db.SaveChanges();
+                        db3.SaveChanges();
                     }
                     catch (DbUpdateConcurrencyException)
                     {

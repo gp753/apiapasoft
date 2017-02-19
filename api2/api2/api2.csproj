@@ -332,6 +332,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\roles.cs">
+      <DependentUpon>RolsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RolsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RolsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RolsModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\RUBRO.cs">
       <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
@@ -367,6 +385,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SocioModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRoles.cs">
+      <DependentUpon>RolsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\users.cs">
       <DependentUpon>RegModel.tt</DependentUpon>
@@ -422,6 +443,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RegModel.edmx</DependentUpon>
       <LastGenOutput>RegModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RolsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RolsModel.edmx</DependentUpon>
+      <LastGenOutput>RolsModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RolsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RolsModel.edmx</DependentUpon>
+      <LastGenOutput>RolsModel.cs</LastGenOutput>
     </Content>
     <Content Include="Models\RubroModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -508,6 +539,13 @@
     </EntityDeploy>
     <Content Include="Models\RegModel.edmx.diagram">
       <DependentUpon>RegModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\RolsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RolsModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\RolsModel.edmx.diagram">
+      <DependentUpon>RolsModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

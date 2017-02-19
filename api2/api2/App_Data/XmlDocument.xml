@@ -481,6 +481,13 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:api2.Controllers.AccountController.changemail(api2.Models.ChangeMailBindingModel)">
+            <summary>
+            Permite cambiar la direccion de correo, recibe la cedula y el newmail
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:api2.Controllers.MOVIMIENTOsController.Get(System.String,System.String,System.String,System.String)">
             <summary>
             Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro
