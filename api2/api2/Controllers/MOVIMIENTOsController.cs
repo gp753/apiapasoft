@@ -19,7 +19,7 @@ namespace api2.Controllers
         
         private apiapaEntities4 db = new apiapaEntities4();
         /// <summary>
-        /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro
+        /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro, si en id_rubro mandas todos te devuelve todos
         /// </summary>
         /// <param name="id_s"></param>
         /// <param name="cod_periodo"></param>
