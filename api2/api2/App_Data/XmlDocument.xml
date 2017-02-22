@@ -481,6 +481,13 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:api2.Controllers.AccountController.Get(System.String)">
+            <summary>
+            Con el id de usuario (no de cliente) devuelve los roles que tiene
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:api2.Controllers.AccountController.changemail(api2.Models.ChangeMailBindingModel)">
             <summary>
             Permite cambiar la direccion de correo, recibe la cedula y el newmail
