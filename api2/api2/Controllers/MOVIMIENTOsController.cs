@@ -19,7 +19,7 @@ namespace api2.Controllers
         
         private apiapaEntities4 db = new apiapaEntities4();
         /// <summary>
-        /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro
+        /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro, si en id_rubro mandas todos te devuelve todos
         /// </summary>
         /// <param name="id_s"></param>
         /// <param name="cod_periodo"></param>
@@ -30,20 +30,41 @@ namespace api2.Controllers
         public IHttpActionResult Get(string id_s, string cod_periodo,  string tipo,string id_rubro)
         {
             
-            var data = from CUENTA in db.CUENTA
-                       join RUBRO in db.RUBRO on
-                       CUENTA.ID_RUBRO equals RUBRO.ID_RUBRO
-                       where ((CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.ID_RUBRO == id_rubro && CUENTA.LIQUIDADO == 1)) && RUBRO.TIPO == tipo
-                       select new { CUENTA.CODIGO_PERIODO, RUBRO.DESCRIPCION, CUENTA.FECHA, CUENTA.IMPORTE };
-
-            if (data.ToList().Count() == 0)
+            if (id_rubro == "todos")
             {
+                var data = from CUENTA in db.CUENTA
+                           join RUBRO in db.RUBRO on
+                           CUENTA.ID_RUBRO equals RUBRO.ID_RUBRO
+                           where ((CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (RUBRO.TIPO == tipo && CUENTA.LIQUIDADO == 1))
+                           select new { CUENTA.CODIGO_PERIODO, RUBRO.DESCRIPCION, CUENTA.FECHA, CUENTA.IMPORTE };
 
-                return NotFound();
+                if (data.ToList().Count() == 0)
+                {
+
+                    return NotFound();
+                }
+
+                var total = data.Sum(a => a.IMPORTE);
+                return Ok(new { data, total });
             }
+            else
+            {
+                var data = from CUENTA in db.CUENTA
+                           join RUBRO in db.RUBRO on
+                           CUENTA.ID_RUBRO equals RUBRO.ID_RUBRO
+                           where ((CUENTA.ID_SOCIO == id_s && CUENTA.CODIGO_PERIODO == cod_periodo) && (CUENTA.ID_RUBRO == id_rubro && CUENTA.LIQUIDADO == 1)) && RUBRO.TIPO == tipo
+                           select new { CUENTA.CODIGO_PERIODO, RUBRO.DESCRIPCION, CUENTA.FECHA, CUENTA.IMPORTE };
 
-            var total = data.Sum(a => a.IMPORTE);
-            return Ok(new { data, total });
+                if (data.ToList().Count() == 0)
+                {
+
+                    return NotFound();
+                }
+
+                var total = data.Sum(a => a.IMPORTE);
+                return Ok(new { data, total });
+            }
+            
         }
         /// <summary>
         /// Hace lo mismo que el anterior pero es por si no se elige el id_rubro, seria para mostrar sin filtrar por id_rubro
