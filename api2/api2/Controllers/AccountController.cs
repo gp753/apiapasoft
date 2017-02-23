@@ -25,7 +25,7 @@ using System.Globalization;
 
 namespace api2.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/Account")]
 
     public class AccountController : ApiController
@@ -162,6 +162,7 @@ namespace api2.Controllers
         ////}
 
         // POST api/Account/ChangePassword
+        [Authorize]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -414,6 +415,7 @@ namespace api2.Controllers
         }
 
         //// GET: /Account/ConfirmEmail //NEGROLIN
+        [AllowAnonymous]
         [HttpGet]
         [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
         public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
