@@ -21,9 +21,11 @@ using api2.Providers;
 using api2.Results;
 using System.Linq;
 
+using System.Globalization;
+
 namespace api2.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
 
     public class AccountController : ApiController
@@ -411,11 +413,39 @@ namespace api2.Controllers
             return Ok("Mail reemplazado con exito!");
         }
 
+        //// GET: /Account/ConfirmEmail //NEGROLIN
+        [HttpGet]
+        [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+        public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            {
+                ModelState.AddModelError("", "User Id and Code are required");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return GetErrorResult(result);
+            }
+        }
+
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+            
+
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -429,7 +459,9 @@ namespace api2.Controllers
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
 
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
 
 
 
@@ -442,6 +474,12 @@ namespace api2.Controllers
                          where Users.Email == model.Email
                          select Users.Id;
 
+                //////Negrolins code
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(id_usr.FirstOrDefault());
+                var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = id_usr.FirstOrDefault(), code = code }));
+                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                //////Negrolins code
+
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
 
                 var data = from SOCIO in db2.SOCIO
@@ -451,9 +489,9 @@ namespace api2.Controllers
                 SOCIO sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
                 var hay_rol = from Roles in db3.Roles
                               where Roles.Id == model.Rol
-                              select Roles.Id; 
+                              select Roles.Id;
 
-                if (sOCIO == null && hay_rol.ToList().Count() ==0)
+                if (sOCIO == null && hay_rol.ToList().Count() == 0)
                 {
                     return NotFound();
                 }
@@ -465,7 +503,7 @@ namespace api2.Controllers
                     rol.UserId = uSERS.Id;
                     rol.RoleId = model.Rol;
 
-                    
+
                     db.Entry(uSERS).State = EntityState.Modified;
                     db3.UserRoles.Add(rol);
 
@@ -484,6 +522,10 @@ namespace api2.Controllers
 
 
 
+
+
+
+
                 return Ok(sOCIO.ID_SOCIO);
             }
             else
@@ -491,9 +533,9 @@ namespace api2.Controllers
 
                 return BadRequest("Usuario ya registrado");
             }
-            
 
-        } 
+
+        }
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
