@@ -162,7 +162,7 @@ namespace api2.Controllers
         ////}
 
         // POST api/Account/ChangePassword
-        [Authorize]
+        [AllowAnonymous]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -200,6 +200,52 @@ namespace api2.Controllers
 
             return Ok();
         }
+
+        //////Negrolins code
+
+        public class ForgotPasswordViewModel
+        {
+            public string Email { get; set; }
+        }
+        
+        //
+        // POST: /Account/ForgotPassword
+
+        //////SE USA ASÍ:
+        //////{
+        //////"email": "hejasako@gmail.com"
+        //////}
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByNameAsync(model.Email);
+                // If user has to activate his email to confirm his account, the use code listing below
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    return Ok();
+                }
+                if (user == null)
+
+
+                {
+                    return Ok();
+                }
+
+                // Send an email with this link
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                await UserManager.SendEmailAsync(user.Id, "Resetear Password", $"Por favor, resetea tu password usando esto {code}");
+                return Ok();
+            }
+
+            // If we got this far, something failed, redisplay form
+            return BadRequest(ModelState);
+        }
+        //////    Negrolins code
 
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
@@ -479,7 +525,7 @@ namespace api2.Controllers
                 //////Negrolins code
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(id_usr.FirstOrDefault());
                 var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = id_usr.FirstOrDefault(), code = code }));
-                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
                 //////Negrolins code
 
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
