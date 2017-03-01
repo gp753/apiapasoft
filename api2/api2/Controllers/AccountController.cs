@@ -162,7 +162,7 @@ namespace api2.Controllers
         ////}
 
         // POST api/Account/ChangePassword
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -238,6 +238,8 @@ namespace api2.Controllers
 
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                //var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
+//                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
                 await UserManager.SendEmailAsync(user.Id, "Resetear Password", $"Por favor, resetea tu password usando esto {code}");
                 return Ok();
             }
