@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.Identity;
 
 namespace api2.Controllers
 {
@@ -17,22 +18,37 @@ namespace api2.Controllers
     public class SOCIOsController : ApiController
     {
         private apiapaEntities db = new apiapaEntities();
+        private apausrEntities db2 = new apausrEntities();
         // GET: api/SOCIOs/5
         /// <summary>
         /// Devuelve los datos del socio con su id
         /// </summary>
         /// <param name="id"></param>Se le pasa el id de socio
         /// <returns></returns>
+        /// 
+        [Authorize]
         [ResponseType(typeof(SOCIO))]
-        public IHttpActionResult GetSOCIO(string id)
+        public IHttpActionResult GetSOCIO()
         {
+            string id_usr = User.Identity.GetUserId();
+            var cedula = from Users in db2.Users
+                         where Users.Id == id_usr
+                         select Users.Cedula;
+            string cedula2 = cedula.FirstOrDefault();
+
+            var id_var = from SOCIO in db.SOCIO
+                     where SOCIO.CEDULA == cedula2
+                     select SOCIO.ID_SOCIO;
+            string id = id_var.FirstOrDefault();
+
             SOCIO sOCIO = db.SOCIO.Find(id);
             if (sOCIO == null)
             {
-                return NotFound();
+               return NotFound();
             }
-          
+
             return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS });
+            
         }
 
         /// <summary>
@@ -40,6 +56,8 @@ namespace api2.Controllers
         /// </summary>
         /// <param name="cedula"></param>
         /// <returns></returns>
+        /// 
+        [Authorize]
         [Route("api/socios/ci/{cedula}")]
         public IHttpActionResult Get(string cedula)
         {
