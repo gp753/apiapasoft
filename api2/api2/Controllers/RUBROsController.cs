@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.Identity;
 
 namespace api2.Controllers
 {
@@ -17,17 +18,30 @@ namespace api2.Controllers
     public class RUBROsController : ApiController
     {
         private RubroEntities db = new RubroEntities();
+        private apausrEntities db2 = new apausrEntities();
+        private apiapaEntities db3 = new apiapaEntities();
 
-       
         // GET: api/RUBROs/5
         /// <summary>
         /// Devuelve el id_rubro y la descripcion del rubro para hacer la lista desplegable de los rubros que tiene un socio y recibe el id de socio
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+
+        [Authorize]
         [ResponseType(typeof(CUENTA))]
-        public IHttpActionResult GetCUENTA(string id)
+        public IHttpActionResult GetCUENTA()
         {
+            string id_usr = User.Identity.GetUserId();
+            var cedula = from Users in db2.Users
+                         where Users.Id == id_usr
+                         select Users.Cedula;
+            string cedula2 = cedula.FirstOrDefault();
+
+            var id_var = from SOCIO in db3.SOCIO
+                         where SOCIO.CEDULA == cedula2
+                         select SOCIO.ID_SOCIO;
+            string id = id_var.FirstOrDefault();
 
             var datos = from CUENTA in db.CUENTA
                         join RUBRO in db.RUBRO on

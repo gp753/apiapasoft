@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.Identity;
 
 namespace api2.Controllers
 {
@@ -17,6 +18,8 @@ namespace api2.Controllers
     public class PERIODOsController : ApiController
     {
         private apiapaEntities2 db = new apiapaEntities2();
+        private apiapaEntities db3 = new apiapaEntities();
+        private apausrEntities db2 = new apausrEntities();
 
         // GET: api/PERIODOs/5
         /// <summary>
@@ -24,13 +27,26 @@ namespace api2.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [Authorize]
         [ResponseType(typeof(PERIODO))]
-        public IHttpActionResult GetPERIODO(string id)
+        public IHttpActionResult GetPERIODO()
         {
             //CUENTA cUENTA = db.CUENTA.Find(id);
 
             // var datos = from CUENTA in db.CUENTA where CUENTA.ID_SOCIO == id
             //             select new { fecha = CUENTA.FECHA, importe = CUENTA.IMPORTE} ;
+
+            string id_usr = User.Identity.GetUserId();
+            var cedula = from Users in db2.Users
+                         where Users.Id == id_usr
+                         select Users.Cedula;
+            string cedula2 = cedula.FirstOrDefault();
+
+            var id_var = from SOCIO in db3.SOCIO
+                         where SOCIO.CEDULA == cedula2
+                         select SOCIO.ID_SOCIO;
+            string id = id_var.FirstOrDefault();
             var datos = from PERIODO in db.PERIODO
                         join CUENTA in db.CUENTA on PERIODO.CODIGO_PERIODO equals CUENTA.CODIGO_PERIODO
                         where CUENTA.ID_SOCIO == id && CUENTA.LIQUIDADO == 1

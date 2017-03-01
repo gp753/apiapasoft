@@ -497,7 +497,7 @@
         </member>
         <member name="M:api2.Controllers.MOVIMIENTOsController.Get(System.String,System.String,System.String,System.String)">
             <summary>
-            Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro
+            Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro, si en id_rubro mandas todos te devuelve todos
             </summary>
             <param name="id_s"></param>
             <param name="cod_periodo"></param>
@@ -514,26 +514,28 @@
             <param name="tipo"></param>
             <returns></returns>
         </member>
-        <member name="M:api2.Controllers.PERIODOsController.GetPERIODO(System.String)">
+        <member name="M:api2.Controllers.PERIODOsController.GetPERIODO">
             <summary>
             Devuelve todos los periodos que tiene el socio a partir de su id para la lista desplegable
             </summary>
             <param name="id"></param>
             <returns></returns>
+            
         </member>
-        <member name="M:api2.Controllers.RUBROsController.GetCUENTA(System.String)">
+        <member name="M:api2.Controllers.RUBROsController.GetCUENTA">
             <summary>
             Devuelve el id_rubro y la descripcion del rubro para hacer la lista desplegable de los rubros que tiene un socio y recibe el id de socio
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:api2.Controllers.SOCIOsController.GetSOCIO(System.String)">
+        <member name="M:api2.Controllers.SOCIOsController.GetSOCIO">
             <summary>
             Devuelve los datos del socio con su id
             </summary>
             <param name="id"></param>Se le pasa el id de socio
             <returns></returns>
+            
         </member>
         <member name="M:api2.Controllers.SOCIOsController.Get(System.String)">
             <summary>
@@ -541,6 +543,7 @@
             </summary>
             <param name="cedula"></param>
             <returns></returns>
+            
         </member>
     </members>
 </doc>
