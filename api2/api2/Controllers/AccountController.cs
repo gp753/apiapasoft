@@ -20,12 +20,13 @@ using api2.Models;
 using api2.Providers;
 using api2.Results;
 using System.Linq;
+using System.Web.Http.Cors;
 
 namespace api2.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private apausrEntities db = new apausrEntities();
