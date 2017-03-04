@@ -22,6 +22,7 @@ using api2.Results;
 using System.Linq;
 using System.Web.Http.Cors;
 
+
 namespace api2.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
@@ -45,6 +46,8 @@ namespace api2.Controllers
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
+            
+            
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
@@ -389,7 +392,7 @@ namespace api2.Controllers
             }
 
             Users uSERS = db.Users.Find(old.FirstOrDefault());
-
+              
             if (uSERS == null)
             {
                 return NotFound();

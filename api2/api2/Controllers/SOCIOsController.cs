@@ -12,9 +12,10 @@ using api2.Models;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 
+
 namespace api2.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     public class SOCIOsController : ApiController
     {
         private apiapaEntities db = new apiapaEntities();

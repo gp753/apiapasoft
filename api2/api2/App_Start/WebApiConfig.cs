@@ -6,6 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 
+using System.Web.Http.Cors;
 namespace api2
 {
     public static class WebApiConfig
@@ -18,7 +19,7 @@ namespace api2
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             //habilitar cors
-            config.EnableCors();
+            //config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();

@@ -7,7 +7,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.Owin.Cors;
+
 using Owin;
 using api2.Providers;
 using api2.Models;
