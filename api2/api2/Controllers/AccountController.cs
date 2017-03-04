@@ -24,9 +24,10 @@ using System.Web.Http.Cors;
 
 namespace api2.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     [Authorize]
     [RoutePrefix("api/Account")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    
     public class AccountController : ApiController
     {
         private apausrEntities db = new apausrEntities();
