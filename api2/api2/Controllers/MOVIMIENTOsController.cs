@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.Identity;
 
 namespace api2.Controllers
 {
@@ -18,6 +19,9 @@ namespace api2.Controllers
     {
         
         private apiapaEntities4 db = new apiapaEntities4();
+        private apiapaEntities2 db4 = new apiapaEntities2();
+        private apiapaEntities db3 = new apiapaEntities();
+        private apausrEntities db2 = new apausrEntities();
         /// <summary>
         /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro, si en id_rubro mandas todos te devuelve todos
         /// </summary>
@@ -26,10 +30,22 @@ namespace api2.Controllers
         /// <param name="tipo"></param>
         /// <param name="id_rubro"></param>
         /// <returns></returns>
+        /// 
+        [Authorize]
         [Route("api/movimientos/{id_s}/{cod_periodo}/{tipo}/{id_rubro}")]
-        public IHttpActionResult Get(string id_s, string cod_periodo,  string tipo,string id_rubro)
+        public IHttpActionResult Get(string cod_periodo,  string tipo,string id_rubro)
         {
-            
+            string id_usr = User.Identity.GetUserId();
+            var cedula = from Users in db2.Users
+                         where Users.Id == id_usr
+                         select Users.Cedula;
+            string cedula2 = cedula.FirstOrDefault();
+
+            var id_var = from SOCIO in db3.SOCIO
+                         where SOCIO.CEDULA == cedula2
+                         select SOCIO.ID_SOCIO;
+            string id_s = id_var.FirstOrDefault();
+
             if (id_rubro == "todos")
             {
                 var data = from CUENTA in db.CUENTA
@@ -73,10 +89,21 @@ namespace api2.Controllers
         /// <param name="cod_periodo"></param>
         /// <param name="tipo"></param>
         /// <returns></returns>
+        /// [
+        [Authorize]
         [Route("api/movimientos/{id_s}/{cod_periodo}/{tipo}")]
-        public IHttpActionResult Get(string id_s, string cod_periodo, string tipo)
+        public IHttpActionResult Get( string cod_periodo, string tipo)
         {
+            string id_usr = User.Identity.GetUserId();
+            var cedula = from Users in db2.Users
+                         where Users.Id == id_usr
+                         select Users.Cedula;
+            string cedula2 = cedula.FirstOrDefault();
 
+            var id_var = from SOCIO in db3.SOCIO
+                         where SOCIO.CEDULA == cedula2
+                         select SOCIO.ID_SOCIO;
+            string id_s = id_var.FirstOrDefault();
             var data = from CUENTA in db.CUENTA
                        join RUBRO in db.RUBRO on
                        CUENTA.ID_RUBRO equals RUBRO.ID_RUBRO

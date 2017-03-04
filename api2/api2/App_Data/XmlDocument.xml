@@ -495,7 +495,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:api2.Controllers.MOVIMIENTOsController.Get(System.String,System.String,System.String,System.String)">
+        <member name="M:api2.Controllers.MOVIMIENTOsController.Get(System.String,System.String,System.String)">
             <summary>
             Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro, si en id_rubro mandas todos te devuelve todos
             </summary>
@@ -504,8 +504,9 @@
             <param name="tipo"></param>
             <param name="id_rubro"></param>
             <returns></returns>
+            
         </member>
-        <member name="M:api2.Controllers.MOVIMIENTOsController.Get(System.String,System.String,System.String)">
+        <member name="M:api2.Controllers.MOVIMIENTOsController.Get(System.String,System.String)">
             <summary>
             Hace lo mismo que el anterior pero es por si no se elige el id_rubro, seria para mostrar sin filtrar por id_rubro
             </summary>
@@ -513,6 +514,7 @@
             <param name="cod_periodo"></param>
             <param name="tipo"></param>
             <returns></returns>
+            [
         </member>
         <member name="M:api2.Controllers.PERIODOsController.GetPERIODO">
             <summary>
