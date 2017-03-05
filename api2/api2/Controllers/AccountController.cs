@@ -22,6 +22,7 @@ using api2.Results;
 using System.Linq;
 
 using System.Globalization;
+using System.Web.Security;
 
 namespace api2.Controllers
 {
@@ -203,6 +204,34 @@ namespace api2.Controllers
 
         //////Negrolins code
 
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        [Route("ResetPassword", Name = "ResetPasswordRoute")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok("ERROR ModelState");
+            }
+            var user = await UserManager.FindByNameAsync(model.Email);
+            //////if (user == null)
+            //////{
+            //////    // Don't reveal that the user does not exist
+            //////    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //////}
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            return Ok("Todo bien");
+            //////if (result.Succeeded)
+            //////{
+            //////    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //////}
+            //////AddErrors(result);
+            //////return View();
+        }
+
         public class ForgotPasswordViewModel
         {
             public string Email { get; set; }
@@ -238,9 +267,17 @@ namespace api2.Controllers
 
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                //var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
-//                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
-                await UserManager.SendEmailAsync(user.Id, "Resetear Password", $"Por favor, resetea tu password usando esto {code}");
+                var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { userId = user.Id, code = code }));
+                await UserManager.SendEmailAsync(user.Id, "Resetear Password", "Por favor, resetea tu password usando esto: <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                //await UserManager.SendEmailAsync(user.Id, "Resetear Password", $"Por favor, resetea tu password usando esto {code}");
+
+                //////    var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { UserId = user.Id, code = code }));
+                //////    await UserManager.SendEmailAsync(user.Id, "Reset Password",
+                //////"Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+
+
                 return Ok();
             }
 
@@ -248,6 +285,7 @@ namespace api2.Controllers
             return BadRequest(ModelState);
         }
         //////    Negrolins code
+
 
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
