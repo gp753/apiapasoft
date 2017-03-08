@@ -23,11 +23,15 @@ using System.Linq;
 
 using System.Globalization;
 using System.Web.Security;
+using Microsoft.Owin.Cors;
+using System.Web.Http.Cors;
 
 namespace api2.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+
 
     public class AccountController : ApiController
     {
@@ -232,6 +236,8 @@ namespace api2.Controllers
             //////return View();
         }
 
+
+
         public class ForgotPasswordViewModel
         {
             public string Email { get; set; }
@@ -265,10 +271,15 @@ namespace api2.Controllers
                     return Ok();
                 }
 
+                //////// Send an email with this link
+                //////string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                //////var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { email = user.Email, code = code }));
+                //////await UserManager.SendEmailAsync(user.Id, "Resetear Password", "Por favor, resetea tu password usando esto: <a href=\"" + callbackUrl + "\">here</a>");
+
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { userId = user.Id, code = code }));
-                await UserManager.SendEmailAsync(user.Id, "Resetear Password", "Por favor, resetea tu password usando esto: <a href=\"" + callbackUrl + "\">here</a>");
+                //var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { email = user.Email, code = code }));
+                await UserManager.SendEmailAsync(user.Id, "Resetear Password", "Por favor, resetea tu password usando esto: <a href=\"http://192.168.0.25/wordpress/reset/?email=" + user.Email + "&code=" + code + "\">here</a>");
 
 
                 //await UserManager.SendEmailAsync(user.Id, "Resetear Password", $"Por favor, resetea tu password usando esto {code}");
