@@ -547,5 +547,12 @@
             <returns></returns>
             
         </member>
+        <member name="M:api2.Controllers.wPusersController.Get(System.String)">
+            <summary>
+            Devuelve el mail de los usuarios wp
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
