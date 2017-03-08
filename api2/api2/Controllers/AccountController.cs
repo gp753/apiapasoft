@@ -23,12 +23,18 @@ using System.Linq;
 using System.Web.Http.Cors;
 
 
+using System.Globalization;
+using System.Web.Security;
+using Microsoft.Owin.Cors;
+using System.Web.Http.Cors;
+
 namespace api2.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     [Authorize]
     [RoutePrefix("api/Account")]
-    
+
+
     public class AccountController : ApiController
     {
         private apausrEntities db = new apausrEntities();
@@ -165,6 +171,7 @@ namespace api2.Controllers
         ////}
 
         // POST api/Account/ChangePassword
+        //[AllowAnonymous]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -202,6 +209,98 @@ namespace api2.Controllers
 
             return Ok();
         }
+
+        //////Negrolins code
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        [Route("ResetPassword", Name = "ResetPasswordRoute")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Ok("ERROR ModelState");
+            }
+            var user = await UserManager.FindByNameAsync(model.Email);
+            //////if (user == null)
+            //////{
+            //////    // Don't reveal that the user does not exist
+            //////    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //////}
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            return Ok("Todo bien");
+            //////if (result.Succeeded)
+            //////{
+            //////    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //////}
+            //////AddErrors(result);
+            //////return View();
+        }
+
+
+
+        public class ForgotPasswordViewModel
+        {
+            public string Email { get; set; }
+        }
+        
+        //
+        // POST: /Account/ForgotPassword
+
+        //////SE USA ASÍ:
+        //////{
+        //////"email": "hejasako@gmail.com"
+        //////}
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByNameAsync(model.Email);
+                // If user has to activate his email to confirm his account, the use code listing below
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    return Ok();
+                }
+                if (user == null)
+
+
+                {
+                    return Ok();
+                }
+
+                //////// Send an email with this link
+                //////string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                //////var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { email = user.Email, code = code }));
+                //////await UserManager.SendEmailAsync(user.Id, "Resetear Password", "Por favor, resetea tu password usando esto: <a href=\"" + callbackUrl + "\">here</a>");
+
+                // Send an email with this link
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                //var callbackUrl = new Uri(Url.Link("ResetPasswordRoute", new { email = user.Email, code = code }));
+                await UserManager.SendEmailAsync(user.Id, "Resetear Password", "Por favor, resetea tu password usando esto: <a href=\"http://192.168.0.25/wordpress/reset/?email=" + user.Email + "&code=" + code + "\">here</a>");
+
+
+                //await UserManager.SendEmailAsync(user.Id, "Resetear Password", $"Por favor, resetea tu password usando esto {code}");
+
+                //////    var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { UserId = user.Id, code = code }));
+                //////    await UserManager.SendEmailAsync(user.Id, "Reset Password",
+                //////"Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+
+
+                return Ok();
+            }
+
+            // If we got this far, something failed, redisplay form
+            return BadRequest(ModelState);
+        }
+        //////    Negrolins code
+
 
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
@@ -416,11 +515,40 @@ namespace api2.Controllers
             return Ok("Mail reemplazado con exito!");
         }
 
+        //// GET: /Account/ConfirmEmail //NEGROLIN
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+        public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            {
+                ModelState.AddModelError("", "User Id and Code are required");
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return GetErrorResult(result);
+            }
+        }
+
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+            
+
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -434,7 +562,9 @@ namespace api2.Controllers
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
 
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
 
 
 
@@ -447,6 +577,12 @@ namespace api2.Controllers
                          where Users.Email == model.Email
                          select Users.Id;
 
+                //////Negrolins code
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(id_usr.FirstOrDefault());
+                var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = id_usr.FirstOrDefault(), code = code }));
+                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
+                //////Negrolins code
+
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
 
                 var data = from SOCIO in db2.SOCIO
@@ -456,9 +592,9 @@ namespace api2.Controllers
                 SOCIO sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
                 var hay_rol = from Roles in db3.Roles
                               where Roles.Id == model.Rol
-                              select Roles.Id; 
+                              select Roles.Id;
 
-                if (sOCIO == null && hay_rol.ToList().Count() ==0)
+                if (sOCIO == null && hay_rol.ToList().Count() == 0)
                 {
                     return NotFound();
                 }
@@ -470,7 +606,7 @@ namespace api2.Controllers
                     rol.UserId = uSERS.Id;
                     rol.RoleId = model.Rol;
 
-                    
+
                     db.Entry(uSERS).State = EntityState.Modified;
                     db3.UserRoles.Add(rol);
 
@@ -489,6 +625,10 @@ namespace api2.Controllers
 
 
 
+
+
+
+
                 return Ok(sOCIO.ID_SOCIO);
             }
             else
@@ -496,9 +636,9 @@ namespace api2.Controllers
 
                 return BadRequest("Usuario ya registrado");
             }
-            
 
-        } 
+
+        }
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
