@@ -541,13 +541,11 @@ namespace api2.Controllers
 
 
         // POST api/Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles ="Admin")]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             
-
-
 
             if (!ModelState.IsValid)
             {

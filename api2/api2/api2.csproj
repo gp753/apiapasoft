@@ -264,6 +264,7 @@
     <Compile Include="Controllers\RUBROsController.cs" />
     <Compile Include="Controllers\SOCIOsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\wPusersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -271,6 +272,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CUENTA.cs">
       <DependentUpon>MovimientosModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\gk1hyugy_users.cs">
+      <DependentUpon>WpMailModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MovimientoModel.Context.cs">
@@ -396,6 +400,21 @@
     <Compile Include="Models\users.cs">
       <DependentUpon>RegModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WpMailModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WpMailModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WpMailModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WpMailModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WpMailModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WpMailModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -478,6 +497,16 @@
       <DependentUpon>SocioModel.edmx</DependentUpon>
       <LastGenOutput>SocioModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\WpMailModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WpMailModel.edmx</DependentUpon>
+      <LastGenOutput>WpMailModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\WpMailModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WpMailModel.edmx</DependentUpon>
+      <LastGenOutput>WpMailModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -551,6 +580,13 @@
     <Content Include="Models\RolsModel.edmx.diagram">
       <DependentUpon>RolsModel.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\WpMailModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WpMailModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\WpMailModel.edmx.diagram">
+      <DependentUpon>WpMailModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -612,7 +648,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55999</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55999/</IISUrl>
+          <IISUrl>https://localhost:44345/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
