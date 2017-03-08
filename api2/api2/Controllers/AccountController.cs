@@ -26,7 +26,7 @@ using System.Web.Http.Cors;
 using System.Globalization;
 using System.Web.Security;
 using Microsoft.Owin.Cors;
-using System.Web.Http.Cors;
+
 
 namespace api2.Controllers
 {

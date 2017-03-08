@@ -12,6 +12,7 @@ using Owin;
 using api2.Providers;
 using api2.Models;
 using System.Web.Http.Cors;
+using Microsoft.Owin.Cors;
 
 namespace api2
 {
