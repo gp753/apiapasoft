@@ -561,9 +561,12 @@ namespace api2.Controllers
 
 
 
+
+
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-
+                
 
 
                 if (!result.Succeeded)
@@ -575,29 +578,41 @@ namespace api2.Controllers
                          where Users.Email == model.Email
                          select Users.Id;
 
-                //////Negrolins code
-                string code = await UserManager.GenerateEmailConfirmationTokenAsync(id_usr.FirstOrDefault());
-                var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = id_usr.FirstOrDefault(), code = code }));
-                await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
-                //////Negrolins code
+             
 
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
 
-                var data = from SOCIO in db2.SOCIO
-                           where SOCIO.CEDULA == model.Cedula
-                           select SOCIO.ID_SOCIO;
+                SOCIO sOCIO = db2.SOCIO.FirstOrDefault();
+                
+                if (model.Rol == "2")
+                {
+                    var data = from SOCIO in db2.SOCIO
+                               where SOCIO.CEDULA == model.Cedula
+                               select SOCIO.ID_SOCIO;
+                    sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
+                }
+                    
+                    
+                
+                
 
-                SOCIO sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
                 var hay_rol = from Roles in db3.Roles
                               where Roles.Id == model.Rol
                               select Roles.Id;
 
-                if (sOCIO == null && hay_rol.ToList().Count() == 0)
+
+                if ((sOCIO == null && model.Rol == "2") || hay_rol.ToList().Count() == 0)
                 {
+                    result = await UserManager.DeleteAsync(user);
                     return NotFound();
                 }
                 else
                 {
+                    //////Negrolins code
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(id_usr.FirstOrDefault());
+                    var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = id_usr.FirstOrDefault(), code = code }));
+                    await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
+                    //////Negrolins code
                     uSERS.Cedula = model.Cedula;
 
                     UserRoles rol = new UserRoles();
