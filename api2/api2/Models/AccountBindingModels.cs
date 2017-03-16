@@ -96,10 +96,27 @@ namespace api2.Models
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
-        //pasto
+      
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class NewPasswordBindingModel
+    {
         [Required]
-        [Display(Name = "Socio ID")]
-        public string SocioID { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
+
+        //pasto
+       
         //finpasto
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
