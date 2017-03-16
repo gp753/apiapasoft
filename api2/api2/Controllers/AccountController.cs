@@ -130,46 +130,6 @@ namespace api2.Controllers
             return Ok();
         }
 
-        // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-        ////[Route("ManageInfo")]
-        ////public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
-        ////{
-        ////    IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-
-        ////    if (user == null)
-        ////    {
-        ////        return null;
-        ////    }
-
-        ////    List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
-
-        ////    foreach (IdentityUserLogin linkedAccount in user.Logins)
-        ////    {
-        ////        logins.Add(new UserLoginInfoViewModel
-        ////        {
-        ////            LoginProvider = linkedAccount.LoginProvider,
-        ////            ProviderKey = linkedAccount.ProviderKey
-        ////        });
-        ////    }
-
-        ////    if (user.PasswordHash != null)
-        ////    {
-        ////        logins.Add(new UserLoginInfoViewModel
-        ////        {
-        ////            LoginProvider = LocalLoginProvider,
-        ////            ProviderKey = user.UserName,
-        ////        });
-        ////    }
-
-        ////    return new ManageInfoViewModel
-        ////    {
-        ////        LocalLoginProvider = LocalLoginProvider,
-        ////        Email = user.UserName,
-        ////        Logins = logins,
-        ////        ExternalLoginProviders = GetExternalLogins(returnUrl, generateState)
-        ////    };
-        ////}
-
         // POST api/Account/ChangePassword
         //[AllowAnonymous]
         [Route("ChangePassword")]
@@ -209,6 +169,48 @@ namespace api2.Controllers
 
             return Ok();
         }
+        
+        /// <summary>
+        /// Esta api permite cambiar el password de un usuario, recibe email, newpassword y confirmpassword
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        [Route("NewPassword")]
+        public async Task<IHttpActionResult> NewPassword(NewPasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var id_usr = from Users in db.Users
+                         where Users.Email == model.Email
+                         select Users.Id;
+            var id_usr_real = id_usr.FirstOrDefault();
+
+            Users uSERS = db.Users.Find(id_usr_real);
+            uSERS.PasswordHash = "";
+            db.Entry(uSERS).State = EntityState.Modified;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            IdentityResult result = await UserManager.AddPasswordAsync(id_usr_real, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+        //fin cambiar pass
 
         //////Negrolins code
 
@@ -559,15 +561,7 @@ namespace api2.Controllers
             {
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-
-
-
-
-
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-                
-
 
                 if (!result.Succeeded)
                 {
@@ -608,11 +602,7 @@ namespace api2.Controllers
                 }
                 else
                 {
-                    //////Negrolins code
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(id_usr.FirstOrDefault());
-                    var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = id_usr.FirstOrDefault(), code = code }));
-                    await UserManager.SendEmailAsync(id_usr.FirstOrDefault(), "Confirma tu cuenta", "Por favor, confirma tu cuenta cliqueando aquí: <a href=\"" + callbackUrl + "\">here</a>");
-                    //////Negrolins code
+                
                     uSERS.Cedula = model.Cedula;
 
                     UserRoles rol = new UserRoles();

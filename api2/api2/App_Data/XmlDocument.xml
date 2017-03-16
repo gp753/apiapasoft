@@ -488,6 +488,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:api2.Controllers.AccountController.NewPassword(api2.Models.NewPasswordBindingModel)">
+            <summary>
+            Esta api permite cambiar el password de un usuario, recibe email, newpassword y confirmpassword
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:api2.Controllers.AccountController.changemail(api2.Models.ChangeMailBindingModel)">
             <summary>
             Permite cambiar la direccion de correo, recibe la cedula y el newmail
