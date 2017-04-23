@@ -21,7 +21,8 @@ namespace api2.Controllers
         private apiapaEntities4 db = new apiapaEntities4();
         private apiapaEntities2 db4 = new apiapaEntities2();
         private apiapaEntities db3 = new apiapaEntities();
-        private apausrEntities db2 = new apausrEntities();
+        private apausrEntities3 db2 = new apausrEntities3();
+        
         /// <summary>
         /// Devuelve el Periodo, descripcion, fecha, importe y la suma total de los importes recibiendo el socio, el periodo el tipo de rubro y el id_rubro, si en id_rubro mandas todos te devuelve todos
         /// </summary>

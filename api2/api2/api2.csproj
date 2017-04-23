@@ -341,21 +341,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reg1Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\RegModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RegModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RegModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RegModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RegModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RegModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\roles.cs">
       <DependentUpon>RolsModel.tt</DependentUpon>
     </Compile>
@@ -483,16 +468,6 @@
       <DependentUpon>Reg1Model.edmx</DependentUpon>
       <LastGenOutput>Reg1Model.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\RegModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RegModel.edmx</DependentUpon>
-      <LastGenOutput>RegModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\RegModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RegModel.edmx</DependentUpon>
-      <LastGenOutput>RegModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\RolsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RolsModel.edmx</DependentUpon>
@@ -591,13 +566,6 @@
     </EntityDeploy>
     <Content Include="Models\MovimientosModel.edmx.diagram">
       <DependentUpon>MovimientosModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\RegModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RegModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\RegModel.edmx.diagram">
-      <DependentUpon>RegModel.edmx</DependentUpon>
     </Content>
     <EntityDeploy Include="Models\RolsModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
