@@ -325,6 +325,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Reg1Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reg1Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reg1Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reg1Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reg1Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reg1Model.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\RegModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -397,8 +412,8 @@
     <Compile Include="Models\UserRoles.cs">
       <DependentUpon>RolsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\users.cs">
-      <DependentUpon>RegModel.tt</DependentUpon>
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>Reg1Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WpMailModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -456,6 +471,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PeriodoModel.edmx</DependentUpon>
       <LastGenOutput>PeriodoModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Reg1Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Reg1Model.edmx</DependentUpon>
+      <LastGenOutput>Reg1Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Reg1Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Reg1Model.edmx</DependentUpon>
+      <LastGenOutput>Reg1Model.cs</LastGenOutput>
     </Content>
     <Content Include="Models\RegModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -586,6 +611,13 @@
     </EntityDeploy>
     <Content Include="Models\WpMailModel.edmx.diagram">
       <DependentUpon>WpMailModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Reg1Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Reg1Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Reg1Model.edmx.diagram">
+      <DependentUpon>Reg1Model.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

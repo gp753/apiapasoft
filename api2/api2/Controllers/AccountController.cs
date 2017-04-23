@@ -575,7 +575,7 @@ namespace api2.Controllers
              
 
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
-
+                
                 SOCIO sOCIO = db2.SOCIO.FirstOrDefault();
                 
                 if (model.Rol == "2")

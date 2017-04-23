@@ -13,10 +13,10 @@ namespace api2.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class apausrEntities : DbContext
+    public partial class apausrEntities3 : DbContext
     {
-        public apausrEntities()
-            : base("name=apausrEntities")
+        public apausrEntities3()
+            : base("name=apausrEntities3")
         {
         }
     
