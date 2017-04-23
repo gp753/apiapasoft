@@ -53,7 +53,9 @@ namespace api2.Models
         [Display(Name = "Rol")]
         public string Rol { get; set; }
 
-        [Required]
+        [Display(Name = "id_socio")]
+        public string id_socio { get; set; }
+
         [Display(Name = "Cedula")]
         public string Cedula { get; set; }
 

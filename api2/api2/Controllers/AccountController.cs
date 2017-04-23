@@ -548,98 +548,126 @@ namespace api2.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            
 
+            bool ban_cedula = false;
+            bool ban_crear = false;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            //condiciones de creacion
+            //verificar si el socio existe
+            if (model.Cedula == "" || model.id_socio != "")
+            {
+                if (model.Rol == "2")
+                {
+                    ban_cedula = false;
+                    SOCIO sOCIO = db2.SOCIO.Find(model.id_socio);
+                    if (sOCIO == null)
+                    {
+                        ban_crear = false;
+                        return BadRequest("Id no pertenece a un socio");
+                    }
+                    else
+                    {
+                        ban_crear = true;
+                    }
+                }
+                else if (model.Rol == "1")
+                {
+                    ban_crear = true;
+                }
+            }
 
+            //verificar si el usuario ya esta creado
             var id_usr = from Users in db.Users
-                         where Users.Cedula == model.Cedula
+                         where Users.id_socio == model.id_socio
                          select Users.Id;
-            if (id_usr.ToList().Count() == 0)
+            
+            if (ban_crear == true && model.Rol == "2")  //verifica el id_socio
+            {
+                
+                if (id_usr.ToList().Count() == 0)
+                {
+                    ban_crear = true;
+                }
+                else
+                {
+                    ban_crear = false;
+                    return BadRequest("ID ya registrado");
+                }
+            }
+
+            if (ban_crear == true) //verifica el Email
+            {
+                 id_usr = from Users in db.Users
+                             where Users.Email == model.Email
+                             select Users.Id;
+                if (id_usr.ToList().Count() == 0)
+                {
+                    ban_crear = true;
+                }
+                else
+                {
+                    ban_crear = false;
+                    return BadRequest("Email ya registrado");
+                }
+            }
+            //se verifica si el rol que se solicito existe
+            var hay_rol = from Roles in db3.Roles
+                          where Roles.Id == model.Rol
+                          select Roles.Id;
+            if (hay_rol.ToList().Count() == 0)
+            {
+                ban_crear = false;
+                return BadRequest("Rol no existe");
+            }
+
+            //se procede a crear el usuario
+            if (ban_crear == true)
             {
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
                 if (!result.Succeeded)
                 {
                     return GetErrorResult(result);
                 }
-
                 id_usr = from Users in db.Users
                          where Users.Email == model.Email
                          select Users.Id;
 
-             
+
 
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
-                
-                SOCIO sOCIO = db2.SOCIO.FirstOrDefault();
-                
-                if (model.Rol == "2")
+                SOCIO sOCIO = db2.SOCIO.Find(model.id_socio);
+
+                uSERS.Cedula = sOCIO.CEDULA;
+                uSERS.id_socio = model.id_socio;
+
+                UserRoles rol = new UserRoles();
+                rol.UserId = uSERS.Id;
+                rol.RoleId = model.Rol;
+
+                db.Entry(uSERS).State = EntityState.Modified;
+                db3.UserRoles.Add(rol);
+
+                try
                 {
-                    var data = from SOCIO in db2.SOCIO
-                               where SOCIO.CEDULA == model.Cedula
-                               select SOCIO.ID_SOCIO;
-                    sOCIO = db2.SOCIO.Find(data.FirstOrDefault());
+                    db.SaveChanges();
+                    db3.SaveChanges();
                 }
-                    
-                    
-                
-                
-
-                var hay_rol = from Roles in db3.Roles
-                              where Roles.Id == model.Rol
-                              select Roles.Id;
-
-
-                if ((sOCIO == null && model.Rol == "2") || hay_rol.ToList().Count() == 0)
+                catch (DbUpdateConcurrencyException)
                 {
-                    result = await UserManager.DeleteAsync(user);
-                    return NotFound();
-                }
-                else
-                {
-                
-                    uSERS.Cedula = model.Cedula;
-
-                    UserRoles rol = new UserRoles();
-                    rol.UserId = uSERS.Id;
-                    rol.RoleId = model.Rol;
-
-
-                    db.Entry(uSERS).State = EntityState.Modified;
-                    db3.UserRoles.Add(rol);
-
-                    try
-                    {
-                        db.SaveChanges();
-                        db3.SaveChanges();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        throw;
-                    }
+                    throw;
                 }
 
+                return Ok("Creado exitosamente!");
 
-
-
-
-
-
-
-
-                return Ok(sOCIO.ID_SOCIO);
             }
-            else
-            {
 
-                return BadRequest("Usuario ya registrado");
-            }
+            //en caso de que no se quedo en ninguna condicion
+            return BadRequest("Datos incorrectos");
+
 
 
         }

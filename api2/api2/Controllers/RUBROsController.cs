@@ -18,7 +18,7 @@ namespace api2.Controllers
     public class RUBROsController : ApiController
     {
         private RubroEntities db = new RubroEntities();
-        private apausrEntities db2 = new apausrEntities();
+        private apausrEntities3 db2 = new apausrEntities3();
         private apiapaEntities db3 = new apiapaEntities();
 
         // GET: api/RUBROs/5

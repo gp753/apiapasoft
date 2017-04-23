@@ -19,7 +19,7 @@ namespace api2.Controllers
     {
         private apiapaEntities2 db = new apiapaEntities2();
         private apiapaEntities db3 = new apiapaEntities();
-        private apausrEntities db2 = new apausrEntities();
+        private apausrEntities3 db2 = new apausrEntities3();
 
         // GET: api/PERIODOs/5
         /// <summary>
