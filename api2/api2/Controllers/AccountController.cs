@@ -37,7 +37,8 @@ namespace api2.Controllers
 
     public class AccountController : ApiController
     {
-        private apausrEntities db = new apausrEntities();
+        
+        private apausrEntities3 db = new apausrEntities3();
         private apiapaEntities db2 = new apiapaEntities();
         private rolsEntities db3 = new rolsEntities();
 
