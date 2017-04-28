@@ -35,8 +35,8 @@ namespace api2.Models
     public class ChangeMailBindingModel
     {
         [Required]
-        [Display(Name = "Current CI")]
-        public string cedula { get; set; }
+        [Display(Name = "Current ID")]
+        public string id_socio { get; set; }
 
         [Required]
         [Display(Name = "New Mail")]

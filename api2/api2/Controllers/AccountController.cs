@@ -305,7 +305,7 @@ namespace api2.Controllers
         }
         //////    Negrolins code
 
-
+        /*
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
@@ -343,7 +343,7 @@ namespace api2.Controllers
 
             return Ok();
         }
-
+        */
         // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
@@ -372,7 +372,7 @@ namespace api2.Controllers
 
             return Ok();
         }
-
+        /*
         // GET api/Account/ExternalLogin
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
@@ -429,7 +429,8 @@ namespace api2.Controllers
 
             return Ok();
         }
-
+        */
+        /*
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
         [Route("ExternalLogins")]
@@ -470,6 +471,7 @@ namespace api2.Controllers
 
             return logins;
         }
+        */
         /// <summary>
         /// Permite cambiar la direccion de correo, recibe la cedula y el newmail
         /// </summary>
@@ -480,7 +482,7 @@ namespace api2.Controllers
         public async Task<IHttpActionResult> changemail(ChangeMailBindingModel model)
         {
             var old = from Users in db.Users
-                      where Users.Cedula == model.cedula
+                      where Users.id_socio == model.id_socio
                       select Users.Id;
             if (old.ToList().Count() == 0)
             {
@@ -494,7 +496,7 @@ namespace api2.Controllers
                 return BadRequest("Mail ya registrado");
             }
 
-            Users uSERS = db.Users.Find(old.FirstOrDefault());
+            Users uSERS = db.Users.Find(model.id_socio);
               
             if (uSERS == null)
             {
@@ -687,7 +689,7 @@ namespace api2.Controllers
 
 
         }
-
+        /*
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
@@ -720,7 +722,7 @@ namespace api2.Controllers
             }
             return Ok();
         }
-
+        */
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
