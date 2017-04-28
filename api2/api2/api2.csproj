@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44345</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -275,7 +274,7 @@
       <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\gk1hyugy_users.cs">
-      <DependentUpon>WpMailModel.tt</DependentUpon>
+      <DependentUpon>wpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MovimientoModel.Context.cs">
@@ -416,6 +415,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WpMailModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\wpModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>wpModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\wpModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>wpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\wpModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>wpModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -508,6 +522,16 @@
       <DependentUpon>WpMailModel.edmx</DependentUpon>
       <LastGenOutput>WpMailModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\wpModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>wpModel.edmx</DependentUpon>
+      <LastGenOutput>wpModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\wpModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>wpModel.edmx</DependentUpon>
+      <LastGenOutput>wpModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -587,6 +611,13 @@
     </EntityDeploy>
     <Content Include="Models\Reg1Model.edmx.diagram">
       <DependentUpon>Reg1Model.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\wpModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>wpModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\wpModel.edmx.diagram">
+      <DependentUpon>wpModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
