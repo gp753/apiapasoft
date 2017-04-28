@@ -41,6 +41,7 @@ namespace api2.Controllers
         private apausrEntities3 db = new apausrEntities3();
         private apiapaEntities db2 = new apiapaEntities();
         private rolsEntities db3 = new rolsEntities();
+        private apaEntities1 db4 = new apaEntities1();
 
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
@@ -613,6 +614,17 @@ namespace api2.Controllers
                     return BadRequest("Email ya registrado");
                 }
             }
+            //verifica si existe en el wordpress
+            //db4
+            var hay_en_wp = from gk1hyugy_users in db4.gk1hyugy_users
+                            where gk1hyugy_users.user_email == model.Email
+                            select gk1hyugy_users.ID;
+            if(hay_en_wp.ToList().Count() == 0)
+            {
+                //quiere decir que el mail fue rechazado en el wp por algun motivo
+                ban_crear = false;
+
+            }
             //se verifica si el rol que se solicito existe
             var hay_rol = from Roles in db3.Roles
                           where Roles.Id == model.Rol
@@ -641,9 +653,13 @@ namespace api2.Controllers
                 Users uSERS = db.Users.Find(id_usr.FirstOrDefault());
                 SOCIO sOCIO = db2.SOCIO.Find(model.id_socio);
 
-                uSERS.Cedula = sOCIO.CEDULA;
-                uSERS.id_socio = model.id_socio;
-
+                
+                if (model.Rol == "2")
+                {
+                    uSERS.id_socio = model.id_socio;
+                    uSERS.Cedula = sOCIO.CEDULA;
+                }
+                
                 UserRoles rol = new UserRoles();
                 rol.UserId = uSERS.Id;
                 rol.RoleId = model.Rol;
