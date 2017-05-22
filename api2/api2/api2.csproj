@@ -262,6 +262,7 @@
     <Compile Include="Controllers\MOVIMIENTOsController.cs" />
     <Compile Include="Controllers\PERIODOsController.cs" />
     <Compile Include="Controllers\RUBROsController.cs" />
+    <Compile Include="Controllers\SOCIOs2Controller.cs" />
     <Compile Include="Controllers\SOCIOsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\wPusersController.cs" />
@@ -377,7 +378,22 @@
       <DependentUpon>RubroModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SOCIO.cs">
-      <DependentUpon>PeriodoModel.tt</DependentUpon>
+      <DependentUpon>SOCIO2MODEL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SOCIO2MODEL.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SOCIO2MODEL.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SOCIO2MODEL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SOCIO2MODEL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SOCIO2MODEL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SOCIO2MODEL.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SocioModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -502,6 +518,16 @@
       <DependentUpon>RubroModel.edmx</DependentUpon>
       <LastGenOutput>RubroModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\SOCIO2MODEL.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SOCIO2MODEL.edmx</DependentUpon>
+      <LastGenOutput>SOCIO2MODEL.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SOCIO2MODEL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SOCIO2MODEL.edmx</DependentUpon>
+      <LastGenOutput>SOCIO2MODEL.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\SocioModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SocioModel.edmx</DependentUpon>
@@ -618,6 +644,13 @@
     </EntityDeploy>
     <Content Include="Models\wpModel.edmx.diagram">
       <DependentUpon>wpModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\SOCIO2MODEL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SOCIO2MODEL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SOCIO2MODEL.edmx.diagram">
+      <DependentUpon>SOCIO2MODEL.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

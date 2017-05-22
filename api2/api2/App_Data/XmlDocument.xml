@@ -538,22 +538,6 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:api2.Controllers.SOCIOsController.GetSOCIO">
-            <summary>
-            Devuelve los datos del socio con su id
-            </summary>
-            <param name="id"></param>Se le pasa el id de socio
-            <returns></returns>
-            
-        </member>
-        <member name="M:api2.Controllers.SOCIOsController.Get(System.String)">
-            <summary>
-            Devuelve todos los datos del socio a partir de la cedula
-            </summary>
-            <param name="cedula"></param>
-            <returns></returns>
-            
-        </member>
         <member name="M:api2.Controllers.wPusersController.Get(System.String)">
             <summary>
             Devuelve el mail de los usuarios wp

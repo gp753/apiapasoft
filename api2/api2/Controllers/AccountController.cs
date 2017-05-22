@@ -477,7 +477,7 @@ namespace api2.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [Route("changemail")]
         public async Task<IHttpActionResult> changemail(ChangeMailBindingModel model)
         {
@@ -496,7 +496,7 @@ namespace api2.Controllers
                 return BadRequest("Mail ya registrado");
             }
 
-            Users uSERS = db.Users.Find(model.id_socio);
+            Users uSERS = db.Users.Find(old.FirstOrDefault());
               
             if (uSERS == null)
             {
@@ -505,8 +505,9 @@ namespace api2.Controllers
             else
             {
                 uSERS.Email = model.NewMail;
+                //cambiar esto en el futuro por si se utilice nombre de usuario y mail diferenciado
+                uSERS.UserName = model.NewMail;
                 db.Entry(uSERS).State = EntityState.Modified;
-
 
                 try
                 {
@@ -545,7 +546,40 @@ namespace api2.Controllers
             }
         }
 
+        //inicio eliminar usuario
+        [Authorize(Roles = "Admin")]
+        [Route("delete")]
+        public IHttpActionResult Delete(DeleteUserBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var id_usr = from Users in db.Users
+                         where Users.Email == model.Email
+                         select Users.Id;
+            var id_usr_real = id_usr.FirstOrDefault();
+
+            Users uSERS = db.Users.Find(id_usr_real);
+            if (uSERS == null)
+            {
+                return NotFound();
+            }
+
+            db.Users.Remove(uSERS);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return Ok();
+        }
+        //fin eliminar usuario
         // POST api/Account/Register
         [Authorize(Roles ="Admin")]
         [Route("Register")]
@@ -618,15 +652,15 @@ namespace api2.Controllers
             }
             //verifica si existe en el wordpress
             //db4
-            var hay_en_wp = from gk1hyugy_users in db4.gk1hyugy_users
-                            where gk1hyugy_users.user_email == model.Email
-                            select gk1hyugy_users.ID;
-            if(hay_en_wp.ToList().Count() == 0)
-            {
-                //quiere decir que el mail fue rechazado en el wp por algun motivo
-                ban_crear = false;
+            //var hay_en_wp = from gk1hyugy_users in db4.gk1hyugy_users
+            //                where gk1hyugy_users.user_email == model.Email
+            //                select gk1hyugy_users.ID;
+            //if(hay_en_wp.ToList().Count() == 0)
+            //{
+            //    //quiere decir que el mail fue rechazado en el wp por algun motivo
+            //    ban_crear = false;
 
-            }
+            //}
             //se verifica si el rol que se solicito existe
             var hay_rol = from Roles in db3.Roles
                           where Roles.Id == model.Rol

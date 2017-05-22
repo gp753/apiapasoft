@@ -15,12 +15,12 @@ using Microsoft.AspNet.Identity;
 namespace api2.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
-    public class SOCIOsController : ApiController
+    public class SOCIOs2Controller : ApiController
     {
         private apiapaEntities5 db = new apiapaEntities5();
         private apausrEntities3 db2 = new apausrEntities3();
 
-
+       
         // GET: api/SOCIOs2/5
         [Authorize]
         [ResponseType(typeof(SOCIO))]
@@ -28,8 +28,8 @@ namespace api2.Controllers
         {
             string id_usr = User.Identity.GetUserId();
             var id_socio = from Users in db2.Users
-                           where Users.Id == id_usr
-                           select Users.id_socio;
+                         where Users.Id == id_usr
+                         select Users.id_socio;
             string id_socio2 = id_socio.FirstOrDefault();
 
             SOCIO sOCIO = db.SOCIO.Find(id_socio2);
@@ -38,7 +38,7 @@ namespace api2.Controllers
                 return NotFound();
             }
 
-            return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS, sOCIO.DIRECCION, sOCIO.TELEFONO_FIJO, sOCIO.TELEFONO_CELULAR, sOCIO.NRO_SOCIO, sOCIO.FECHA_NACIMIENTO, sOCIO.FECHA_ALTA });
+            return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS,sOCIO.DIRECCION, sOCIO.TELEFONO_FIJO,sOCIO.TELEFONO_CELULAR,sOCIO.NRO_SOCIO,sOCIO.FECHA_NACIMIENTO,sOCIO.FECHA_ALTA });
         }
         /*
         // PUT: api/SOCIOs2/5
