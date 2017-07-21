@@ -257,6 +257,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BENEFICIARIOsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MOVIMIENTOsController.cs" />
@@ -271,6 +272,27 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BENEFICIARIO.cs">
+      <DependentUpon>BeneficiarioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BeneficiarioModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BeneficiarioModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BeneficiarioModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BeneficiarioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BeneficiarioModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BeneficiarioModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CATEGORIA.cs">
+      <DependentUpon>BeneficiarioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CUENTA.cs">
       <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
@@ -341,6 +363,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reg1Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ROL.cs">
+      <DependentUpon>BeneficiarioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\roles.cs">
       <DependentUpon>RolsModel.tt</DependentUpon>
     </Compile>
@@ -410,6 +435,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SocioModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TEMAS.cs">
+      <DependentUpon>BeneficiarioModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TEMAS_AUTORES.cs">
+      <DependentUpon>BeneficiarioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserRoles.cs">
       <DependentUpon>RolsModel.tt</DependentUpon>
     </Compile>
@@ -458,6 +489,16 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\BeneficiarioModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BeneficiarioModel.edmx</DependentUpon>
+      <LastGenOutput>BeneficiarioModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\BeneficiarioModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BeneficiarioModel.edmx</DependentUpon>
+      <LastGenOutput>BeneficiarioModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\MovimientoModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MovimientoModel.edmx</DependentUpon>
@@ -651,6 +692,13 @@
     </EntityDeploy>
     <Content Include="Models\SOCIO2MODEL.edmx.diagram">
       <DependentUpon>SOCIO2MODEL.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\BeneficiarioModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BeneficiarioModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BeneficiarioModel.edmx.diagram">
+      <DependentUpon>BeneficiarioModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

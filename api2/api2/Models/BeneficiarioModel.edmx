@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BeneficiarioModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BENEFICIARIO">
+          <Key>
+            <PropertyRef Name="ID_BENEFICIARIO" />
+          </Key>
+          <Property Name="ID_BENEFICIARIO" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="NOMBRES" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APELLIDOS" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IP" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CODIGOCAE" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIA">
+          <Key>
+            <PropertyRef Name="cod_tipo" />
+          </Key>
+          <Property Name="cod_tipo" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_ROL" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="ROL" Type="char" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TEMAS">
+          <Key>
+            <PropertyRef Name="ID_TEMA" />
+          </Key>
+          <Property Name="ID_TEMA" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="NOMBRE" Type="char" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TEMAS_AUTORES">
+          <Key>
+            <PropertyRef Name="ID_TEMA" />
+            <PropertyRef Name="ID_AUTOR" />
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_TEMA" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ID_AUTOR" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="ID_ROL" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="PORCEJECU" Type="bigint" Nullable="false" />
+          <Property Name="PORCEFONO" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="TEMAS_AUTORES_ibfk_1">
+          <End Role="TEMAS" Type="Self.TEMAS" Multiplicity="1" />
+          <End Role="TEMAS_AUTORES" Type="Self.TEMAS_AUTORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMAS">
+              <PropertyRef Name="ID_TEMA" />
+            </Principal>
+            <Dependent Role="TEMAS_AUTORES">
+              <PropertyRef Name="ID_TEMA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TEMAS_AUTORES_ibfk_3">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="TEMAS_AUTORES" Type="Self.TEMAS_AUTORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="TEMAS_AUTORES">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BeneficiarioModelStoreContainer">
+          <EntitySet Name="BENEFICIARIO" EntityType="Self.BENEFICIARIO" Schema="apiapa" store:Type="Tables" />
+          <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" Schema="apiapa" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="apiapa" store:Type="Tables" />
+          <EntitySet Name="TEMAS" EntityType="Self.TEMAS" Schema="apiapa" store:Type="Tables" />
+          <EntitySet Name="TEMAS_AUTORES" EntityType="Self.TEMAS_AUTORES" Schema="apiapa" store:Type="Tables" />
+          <AssociationSet Name="TEMAS_AUTORES_ibfk_1" Association="Self.TEMAS_AUTORES_ibfk_1">
+            <End Role="TEMAS" EntitySet="TEMAS" />
+            <End Role="TEMAS_AUTORES" EntitySet="TEMAS_AUTORES" />
+          </AssociationSet>
+          <AssociationSet Name="TEMAS_AUTORES_ibfk_3" Association="Self.TEMAS_AUTORES_ibfk_3">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="TEMAS_AUTORES" EntitySet="TEMAS_AUTORES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BeneficiarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BENEFICIARIO">
+          <Key>
+            <PropertyRef Name="ID_BENEFICIARIO" />
+          </Key>
+          <Property Name="ID_BENEFICIARIO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APELLIDOS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CODIGOCAE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIA">
+          <Key>
+            <PropertyRef Name="cod_tipo" />
+          </Key>
+          <Property Name="cod_tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_ROL" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ROL1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TEMAS_AUTORES" Relationship="Self.TEMAS_AUTORES_ibfk_3" FromRole="ROL" ToRole="TEMAS_AUTORES" />
+        </EntityType>
+        <EntityType Name="TEMAS">
+          <Key>
+            <PropertyRef Name="ID_TEMA" />
+          </Key>
+          <Property Name="ID_TEMA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TEMAS_AUTORES" Relationship="Self.TEMAS_AUTORES_ibfk_1" FromRole="TEMAS" ToRole="TEMAS_AUTORES" />
+        </EntityType>
+        <EntityType Name="TEMAS_AUTORES">
+          <Key>
+            <PropertyRef Name="ID_TEMA" />
+            <PropertyRef Name="ID_AUTOR" />
+            <PropertyRef Name="ID_ROL" />
+          </Key>
+          <Property Name="ID_TEMA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_AUTOR" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_ROL" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PORCEJECU" Type="Int64" Nullable="false" />
+          <Property Name="PORCEFONO" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ROL" Relationship="Self.TEMAS_AUTORES_ibfk_3" FromRole="TEMAS_AUTORES" ToRole="ROL" />
+          <NavigationProperty Name="TEMAS" Relationship="Self.TEMAS_AUTORES_ibfk_1" FromRole="TEMAS_AUTORES" ToRole="TEMAS" />
+        </EntityType>
+        <Association Name="TEMAS_AUTORES_ibfk_3">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="TEMAS_AUTORES" Type="Self.TEMAS_AUTORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID_ROL" />
+            </Principal>
+            <Dependent Role="TEMAS_AUTORES">
+              <PropertyRef Name="ID_ROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TEMAS_AUTORES_ibfk_1">
+          <End Role="TEMAS" Type="Self.TEMAS" Multiplicity="1" />
+          <End Role="TEMAS_AUTORES" Type="Self.TEMAS_AUTORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMAS">
+              <PropertyRef Name="ID_TEMA" />
+            </Principal>
+            <Dependent Role="TEMAS_AUTORES">
+              <PropertyRef Name="ID_TEMA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BeneficiariosEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BENEFICIARIO" EntityType="Self.BENEFICIARIO" />
+          <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" />
+          <EntitySet Name="TEMAS" EntityType="Self.TEMAS" />
+          <EntitySet Name="TEMAS_AUTORES" EntityType="Self.TEMAS_AUTORES" />
+          <AssociationSet Name="TEMAS_AUTORES_ibfk_3" Association="Self.TEMAS_AUTORES_ibfk_3">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="TEMAS_AUTORES" EntitySet="TEMAS_AUTORES" />
+          </AssociationSet>
+          <AssociationSet Name="TEMAS_AUTORES_ibfk_1" Association="Self.TEMAS_AUTORES_ibfk_1">
+            <End Role="TEMAS" EntitySet="TEMAS" />
+            <End Role="TEMAS_AUTORES" EntitySet="TEMAS_AUTORES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BeneficiarioModelStoreContainer" CdmEntityContainer="BeneficiariosEntity">
+          <EntitySetMapping Name="BENEFICIARIO">
+            <EntityTypeMapping TypeName="BeneficiarioModel.BENEFICIARIO">
+              <MappingFragment StoreEntitySet="BENEFICIARIO">
+                <ScalarProperty Name="ID_BENEFICIARIO" ColumnName="ID_BENEFICIARIO" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="APELLIDOS" ColumnName="APELLIDOS" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="CODIGOCAE" ColumnName="CODIGOCAE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIA">
+            <EntityTypeMapping TypeName="BeneficiarioModel.CATEGORIA">
+              <MappingFragment StoreEntitySet="CATEGORIA">
+                <ScalarProperty Name="cod_tipo" ColumnName="cod_tipo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL">
+            <EntityTypeMapping TypeName="BeneficiarioModel.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="ROL1" ColumnName="ROL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMAS">
+            <EntityTypeMapping TypeName="BeneficiarioModel.TEMAS">
+              <MappingFragment StoreEntitySet="TEMAS">
+                <ScalarProperty Name="ID_TEMA" ColumnName="ID_TEMA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMAS_AUTORES">
+            <EntityTypeMapping TypeName="BeneficiarioModel.TEMAS_AUTORES">
+              <MappingFragment StoreEntitySet="TEMAS_AUTORES">
+                <ScalarProperty Name="ID_TEMA" ColumnName="ID_TEMA" />
+                <ScalarProperty Name="ID_AUTOR" ColumnName="ID_AUTOR" />
+                <ScalarProperty Name="ID_ROL" ColumnName="ID_ROL" />
+                <ScalarProperty Name="PORCEJECU" ColumnName="PORCEJECU" />
+                <ScalarProperty Name="PORCEFONO" ColumnName="PORCEFONO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
