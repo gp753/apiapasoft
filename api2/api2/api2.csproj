@@ -264,6 +264,7 @@
     <Compile Include="Controllers\RUBROsController.cs" />
     <Compile Include="Controllers\SOCIOs2Controller.cs" />
     <Compile Include="Controllers\SOCIOsController.cs" />
+    <Compile Include="Controllers\TEMAS_AUTORESController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\wPusersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -271,6 +272,9 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BENEFICIARIO.cs">
+      <DependentUpon>modelo_temas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CUENTA.cs">
       <DependentUpon>MovimientosModel.tt</DependentUpon>
     </Compile>
@@ -278,6 +282,21 @@
       <DependentUpon>wpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\modelo_temas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modelo_temas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\modelo_temas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modelo_temas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\modelo_temas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modelo_temas.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\MovimientoModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -341,6 +360,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reg1Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ROL.cs">
+      <DependentUpon>modelo_temas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\roles.cs">
       <DependentUpon>RolsModel.tt</DependentUpon>
     </Compile>
@@ -378,7 +400,7 @@
       <DependentUpon>RubroModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SOCIO.cs">
-      <DependentUpon>SOCIO2MODEL.tt</DependentUpon>
+      <DependentUpon>modelo_temas.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SOCIO2MODEL.Context.cs">
       <AutoGen>True</AutoGen>
@@ -409,6 +431,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SocioModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TEMAS.cs">
+      <DependentUpon>modelo_temas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TEMAS_AUTORES.cs">
+      <DependentUpon>modelo_temas.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRoles.cs">
       <DependentUpon>RolsModel.tt</DependentUpon>
@@ -458,6 +486,16 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\modelo_temas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>modelo_temas.edmx</DependentUpon>
+      <LastGenOutput>modelo_temas.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\modelo_temas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>modelo_temas.edmx</DependentUpon>
+      <LastGenOutput>modelo_temas.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\MovimientoModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MovimientoModel.edmx</DependentUpon>
@@ -651,6 +689,13 @@
     </EntityDeploy>
     <Content Include="Models\SOCIO2MODEL.edmx.diagram">
       <DependentUpon>SOCIO2MODEL.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\modelo_temas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>modelo_temas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\modelo_temas.edmx.diagram">
+      <DependentUpon>modelo_temas.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\windows.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

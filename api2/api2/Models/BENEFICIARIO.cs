@@ -12,18 +12,12 @@ namespace api2.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SOCIO
+    public partial class BENEFICIARIO
     {
-        public string ID_SOCIO { get; set; }
-        public string APELLIDOS { get; set; }
+        public string ID_BENEFICIARIO { get; set; }
         public string NOMBRES { get; set; }
-        public string CEDULA { get; set; }
-        public string DIRECCION { get; set; }
-        public string TELEFONO_FIJO { get; set; }
-        public string TELEFONO_CELULAR { get; set; }
-        public string NRO_SOCIO { get; set; }
-        public Nullable<System.DateTime> FECHA_NACIMIENTO { get; set; }
-        public Nullable<System.DateTime> FECHA_ALTA { get; set; }
+        public string APELLIDOS { get; set; }
         public string IP { get; set; }
+        public string CODIGOCAE { get; set; }
     }
 }
