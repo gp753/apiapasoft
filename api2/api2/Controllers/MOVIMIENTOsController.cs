@@ -42,6 +42,8 @@ namespace api2.Controllers
                          select Users.Cedula;
             string cedula2 = cedula.FirstOrDefault();
 
+
+
             var id_var = from SOCIO in db3.SOCIO
                          where SOCIO.CEDULA == cedula2
                          select SOCIO.ID_SOCIO;
