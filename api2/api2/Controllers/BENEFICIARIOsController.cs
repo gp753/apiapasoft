@@ -9,12 +9,15 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace api2.Controllers
 {
     public class BENEFICIARIOsController : ApiController
     {
         private BeneficiariosEntity db = new BeneficiariosEntity();
+        private apausrEntities3 db2 = new apausrEntities3();
+        private apiapaEntities5 db3 = new apiapaEntities5();
 
         // GET: api/BENEFICIARIOs
         public IQueryable<BENEFICIARIO> GetBENEFICIARIO()
@@ -22,8 +25,26 @@ namespace api2.Controllers
             return db.BENEFICIARIO;
         }
 
-        // GET: api/BENEFICIARIOs/5
+        [Authorize]
         [ResponseType(typeof(BENEFICIARIO))]
+        public IHttpActionResult GetBENEFICIARIO(string id)
+        {
+            string id_usr = User.Identity.GetUserId();
+            var id_socio = from Users in db2.Users
+                           where Users.Id == id_usr
+                           select Users.id_socio;
+            string id_socio2 = id_socio.FirstOrDefault();
+
+            SOCIO sOCIO = db3.SOCIO.Find(id_socio2);
+            if (sOCIO == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { sOCIO.CEDULA, sOCIO.NOMBRES, sOCIO.APELLIDOS, sOCIO.DIRECCION, sOCIO.TELEFONO_FIJO, sOCIO.TELEFONO_CELULAR, sOCIO.NRO_SOCIO, sOCIO.FECHA_NACIMIENTO, sOCIO.FECHA_ALTA });
+        }
+        // GET: api/BENEFICIARIOs/5
+       /* [ResponseType(typeof(BENEFICIARIO))]
         public IHttpActionResult GetBENEFICIARIO(string id)
         {
             BENEFICIARIO bENEFICIARIO = db.BENEFICIARIO.Find(id);
@@ -34,7 +55,7 @@ namespace api2.Controllers
 
             return Ok(bENEFICIARIO);
         }
-
+        */
         // PUT: api/BENEFICIARIOs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBENEFICIARIO(string id, BENEFICIARIO bENEFICIARIO)
