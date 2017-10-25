@@ -9,10 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using api2.Models;
+using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 
 namespace api2.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TEMAS_AUTORESController : ApiController
     {
         private temas_beneficiarios_Entities db = new temas_beneficiarios_Entities();
